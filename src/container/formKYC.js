@@ -275,6 +275,7 @@ class FormKYC extends Component {
               <Form.Group controlId="formGridAddress1">
                 <Form.Label>District</Form.Label>
                 <Form.Control type="text" value={this.state.birth_place_district}  onChange={(e)=>this.setState({birth_place_district:e.target.value})}/>
+           
               </Form.Group>
 
               <Form.Group controlId="formGridAddress2">
