@@ -19,11 +19,11 @@ class FormKYC extends Component {
     upload_disabled: false,  
 
     //for face
-    verified: true,
+    verified: null,
 
     //for text
     citizen_no: null,
-    full_name: "manish",
+    full_name: "",
     address:"",
     ward_no:"",
     area:"",
