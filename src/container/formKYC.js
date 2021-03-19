@@ -216,11 +216,11 @@ class FormKYC extends Component {
         <div className="heading">
           <div style={{width:'8%',height:'100%'}}><img src={logo} alt="dont have img" style={{height:'100%'}}/></div>
         </div>
-        <div style={{width: '100%'}}>     
+        <div className="form-parent"style={{width: '100%'}}>     
        
             {this.state.full_name?
-        <div style={{width:"70%",display: "flex",justifyContent: "center",marginLeft:'15%'}}>
-                    <Form>
+        <div style={{width:"100%",display: "flex",justifyContent: "center"}}>
+                    <Form style={{width:"100%"}}>
                       <div className="form-title-bar"> 
                       <h3>Your Form Is Ready</h3>
                      </div>
@@ -382,8 +382,8 @@ class FormKYC extends Component {
       
         
         :
-        <form style={{display:'flex',flexDirection:'column'}}>
-                <div  style={{display:"flex",height:'20rem',justifyContent:"space-between",margin:'10px'}}>                               
+        <form className="files-form" >
+                <div  className="upload-field" >                               
             <Row className="dropzone-outlook">
               <Col md={12} style={{height:'106px'}}> 
                         <Dropzone
