@@ -23,6 +23,14 @@ class FormKYC extends Component {
     full_name: "",
     address:"",
     ward_no:"",
+    area:"",
+    sex:"",
+    birth_place_district:"",
+    birth_place_ward_no:"",
+    birth_place_area:"",
+    dob_year: "",
+    dob_month:"",
+    dob_day: "",
     selectedFiles: [],
     selectedFilesBack:[],
     selectedFilesPP:[]
@@ -145,9 +153,18 @@ class FormKYC extends Component {
       this.setState({upload_disabled:false})
       this.setState({citizen_no: res.data["citizen_no"]})
       this.setState({full_name: res.data["full_name"]})
+      this.setState({area: res.data["p_address_area"]})
       this.setState({address:res.data["p_address_district"]})
       this.setState({ward_no:res.data["p_address_ward_no"]})
-      this.props.data({...this.state})
+      this.setState({dob_year:res.data["dob_year"]})
+      this.setState({dob_month:res.data["dob_month"]})
+      this.setState({dob_day:res.data["dob_day"]})
+      this.setState({sex: res.data["sex"]})
+      this.setState({birth_place_area: res.data["birth_place_area"]})
+      this.setState({birth_place_district: res.data["birth_place_district"]})
+      this.setState({birth_place_ward_no:res.data["birth_place_ward_no"]})
+
+      // this.props.data({...this.state})
     })
     axios({
       // url : "http://mangaleshworagrovet.com/text",
@@ -229,35 +246,35 @@ class FormKYC extends Component {
               <div className="form-title-bar"><h3>Birth Address</h3></div>
               <Form.Group controlId="formGridAddress1">
                 <Form.Label>District</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control type="text" value={this.state.birth_place_district}/>
               </Form.Group>
 
               <Form.Group controlId="formGridAddress2">
                 <Form.Label>Muncipality</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control type="text" value={this.state.birth_place_area}/>
+              </Form.Group>
+
+            
+                <Form.Group  controlId="formGridCity">
+                  <Form.Label>Ward no</Form.Label>
+                  <Form.Control type="text" value={this.state.birth_place_ward_no}/>
+                </Form.Group>
+
+              <div className="form-title-bar"><h3>Permanent Address</h3></div>
+              <Form.Group controlId="formGridAddress1">
+                <Form.Label>District</Form.Label>
+                <Form.Control type="text" value={this.state.address}/>
+              </Form.Group>
+
+              <Form.Group controlId="formGridAddress2">
+                <Form.Label>Muncipality</Form.Label>
+                <Form.Control type="text" value={this.state.area}/>
               </Form.Group>
 
             
                 <Form.Group  controlId="formGridCity">
                   <Form.Label>Ward no</Form.Label>
                   <Form.Control type="text" value={this.state.ward_no}/>
-                </Form.Group>
-
-              <div className="form-title-bar"><h3>Permanent Address</h3></div>
-              <Form.Group controlId="formGridAddress1">
-                <Form.Label>District</Form.Label>
-                <Form.Control type="text" />
-              </Form.Group>
-
-              <Form.Group controlId="formGridAddress2">
-                <Form.Label>Muncipality</Form.Label>
-                <Form.Control type="text" />
-              </Form.Group>
-
-            
-                <Form.Group  controlId="formGridCity">
-                  <Form.Label>ward_no</Form.Label>
-                  <Form.Control type="text"/>
                 </Form.Group>
 
 
@@ -314,17 +331,17 @@ class FormKYC extends Component {
               <h3>Date Of Birth</h3> 
                   <Form.Group controlId="formGridZip">
                     <Form.Label>Year</Form.Label>
-                    <Form.Control />
+                    <Form.Control value={this.state.dob_year}/>
                   </Form.Group>
 
                   <Form.Group controlId="formGridZip">
                     <Form.Label>Month</Form.Label>
-                    <Form.Control />
+                    <Form.Control value={this.state.dob_month} />
                   </Form.Group>
 
                   <Form.Group controlId="formGridZip">
                     <Form.Label>Day</Form.Label>
-                    <Form.Control />
+                    <Form.Control value={this.state.dob_day}/>
                   </Form.Group>
 
               <h3>Contact Information</h3> 
@@ -369,194 +386,194 @@ class FormKYC extends Component {
                 <div  style={{display:"flex",height:'20rem',justifyContent:"space-between",margin:'10px'}}>                               
             <Row className="dropzone-outlook">
               <Col md={12} style={{height:'106px'}}> 
-                                                            <Dropzone
-                                                            onDrop={acceptedFiles =>
-                                                            this.handleAcceptedFiles(acceptedFiles)
-                                                            }
-                                                        >
-                                                            {({ getRootProps, getInputProps }) => (
-                                                            <div className="dropzone">
-                                                                <div
-                                                                className="dz-message needsclick mt-2"
-                                                                {...getRootProps()}
-                                                                >
-                                                                <input {...getInputProps()} />
-                                                                <div className="mb-3" style={{height:'120px'}}>
-                                                                    <i className="display-4 text-muted ri-upload-cloud-2-line"></i>
-                                                                </div>
-                                                                <h4 style={{height:'15rem'}}>Drop Your Citizenship Front Image Here.</h4>
-                                                                </div>
-                                                            </div>
-                                                            )}
-                                                        </Dropzone>
-                                                        <div
-                                                            className="dropzone-previews mt-3"
-                                                            id="file-previews"
-                                                        >
-                                                            {this.state.selectedFiles.map((f, i) => {
-                                                            return (
-                                                                <Card
-                                                                className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
-                                                                key={i + "-file"}
-                                                                >
-                                                                <div className="p-2">
-                                                                    <Row className="align-items-center">
-                                                                    <Col className="col-auto">
-                                                                        <img
-                                                                        data-dz-thumbnail=""
-                                                                        height="80"
-                                                                        className="avatar-sm rounded bg-light"
-                                                                        alt={f.name}
-                                                                        src={f.preview}
-                                                                        />
-                                                                    </Col>
-                                                                    <Col>
-                                                                        <Link
-                                                                        to="#"
-                                                                        className="text-muted font-weight-bold"
-                                                                        >
-                                                                        {f.name}
-                                                                        </Link>
-                                                                        <p className="mb-0">
-                                                                        <strong>{f.formattedSize}</strong>
-                                                                        </p>
-                                                                    </Col>
-                                                                    </Row>
-                                                                </div>
-                                                                </Card>
-                                                            );
-                                                            })}
-                                                        </div>
-                                                        </Col>
-                                                        </Row>
-           
-           
+                        <Dropzone
+                        onDrop={acceptedFiles =>
+                        this.handleAcceptedFiles(acceptedFiles)
+                        }
+                    >
+                        {({ getRootProps, getInputProps }) => (
+                        <div className="dropzone">
+                            <div
+                            className="dz-message needsclick mt-2"
+                            {...getRootProps()}
+                            >
+                            <input {...getInputProps()} />
+                            <div className="mb-3" style={{height:'120px'}}>
+                                <i className="display-4 text-muted ri-upload-cloud-2-line"></i>
+                            </div>
+                            <h4 style={{height:'15rem'}}>Drop Your Citizenship Front Image Here.</h4>
+                            </div>
+                        </div>
+                        )}
+                    </Dropzone>
+                    <div
+                        className="dropzone-previews mt-3"
+                        id="file-previews"
+                    >
+                        {this.state.selectedFiles.map((f, i) => {
+                        return (
+                            <Card
+                            className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                            key={i + "-file"}
+                            >
+                            <div className="p-2">
+                                <Row className="align-items-center">
+                                <Col className="col-auto">
+                                    <img
+                                    data-dz-thumbnail=""
+                                    height="80"
+                                    className="avatar-sm rounded bg-light"
+                                    alt={f.name}
+                                    src={f.preview}
+                                    />
+                                </Col>
+                                <Col>
+                                    <Link
+                                    to="#"
+                                    className="text-muted font-weight-bold"
+                                    >
+                                    {f.name}
+                                    </Link>
+                                    <p className="mb-0">
+                                    <strong>{f.formattedSize}</strong>
+                                    </p>
+                                </Col>
+                                </Row>
+                            </div>
+                            </Card>
+                        );
+                        })}
+                    </div>
+                    </Col>
+                    </Row>
+
+
             <Row className="dropzone-outlook">
-              <Col md={12} style={{height:'106px'}}> 
-                                                            <Dropzone
-                                                            onDrop={acceptedFiles =>
-                                                            this.handleAcceptedFilesBack(acceptedFiles)
-                                                            }
-                                                        >
-                                                            {({ getRootProps, getInputProps }) => (
-                                                            <div className="dropzone">
-                                                                <div
-                                                                className="dz-message needsclick mt-2"
-                                                                {...getRootProps()}
-                                                                >
-                                                                <input {...getInputProps()} />
-                                                                <div className="mb-3" style={{height:'120px'}}>
-                                                                    <i className="display-4 text-muted ri-upload-cloud-2-line"></i>
-                                                                </div>
-                                                                <h4 style={{height:'15rem'}}>Drop Your Citizenship Back Image Here.</h4>
-                                                                </div>
-                                                            </div>
-                                                            )}
-                                                        </Dropzone>
-                                                        <div
-                                                            className="dropzone-previews mt-3"
-                                                            id="file-previews"
-                                                        >
-                                                            {this.state.selectedFilesBack.map((f, i) => {
-                                                            return (
-                                                                <Card
-                                                                className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
-                                                                key={i + "-file"}
-                                                                >
-                                                                <div className="p-2">
-                                                                    <Row className="align-items-center">
-                                                                    <Col className="col-auto">
-                                                                        <img
-                                                                        data-dz-thumbnail=""
-                                                                        height="80"
-                                                                        className="avatar-sm rounded bg-light"
-                                                                        alt={f.name}
-                                                                        src={f.preview}
-                                                                        />
-                                                                    </Col>
-                                                                    <Col>
-                                                                        <Link
-                                                                        to="#"
-                                                                        className="text-muted font-weight-bold"
-                                                                        >
-                                                                        {f.name}
-                                                                        </Link>
-                                                                        <p className="mb-0">
-                                                                        <strong>{f.formattedSize}</strong>
-                                                                        </p>
-                                                                    </Col>
-                                                                    </Row>
-                                                                </div>
-                                                                </Card>
-                                                            );
-                                                            })}
-                                                        </div>
-                                                        </Col>
-                                                        </Row>
+<Col md={12} style={{height:'106px'}}> 
+                                        <Dropzone
+                                        onDrop={acceptedFiles =>
+                                        this.handleAcceptedFilesBack(acceptedFiles)
+                                        }
+                                    >
+                                        {({ getRootProps, getInputProps }) => (
+                                        <div className="dropzone">
+                                            <div
+                                            className="dz-message needsclick mt-2"
+                                            {...getRootProps()}
+                                            >
+                                            <input {...getInputProps()} />
+                                            <div className="mb-3" style={{height:'120px'}}>
+                                                <i className="display-4 text-muted ri-upload-cloud-2-line"></i>
+                                            </div>
+                                            <h4 style={{height:'15rem'}}>Drop Your Citizenship Back Image Here.</h4>
+                                            </div>
+                                        </div>
+                                        )}
+                                    </Dropzone>
+                                    <div
+                                        className="dropzone-previews mt-3"
+                                        id="file-previews"
+                                    >
+                                        {this.state.selectedFilesBack.map((f, i) => {
+                                        return (
+                                            <Card
+                                            className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                                            key={i + "-file"}
+                                            >
+                                            <div className="p-2">
+                                                <Row className="align-items-center">
+                                                <Col className="col-auto">
+                                                    <img
+                                                    data-dz-thumbnail=""
+                                                    height="80"
+                                                    className="avatar-sm rounded bg-light"
+                                                    alt={f.name}
+                                                    src={f.preview}
+                                                    />
+                                                </Col>
+                                                <Col>
+                                                    <Link
+                                                    to="#"
+                                                    className="text-muted font-weight-bold"
+                                                    >
+                                                    {f.name}
+                                                    </Link>
+                                                    <p className="mb-0">
+                                                    <strong>{f.formattedSize}</strong>
+                                                    </p>
+                                                </Col>
+                                                </Row>
+                                            </div>
+                                            </Card>
+                                        );
+                                        })}
+                                    </div>
+                                    </Col>
+                                    </Row>
 
                                  <Row className="dropzone-outlook">
                                     <Col md={12} style={{height:'106px'}}> 
-                                                            <Dropzone
-                                                            onDrop={acceptedFiles =>
-                                                            this.handleAcceptedFilesPP(acceptedFiles)
-                                                            }
-                                                        >
-                                                            {({ getRootProps, getInputProps }) => (
-                                                            <div className="dropzone">
-                                                                <div
-                                                                className="dz-message needsclick mt-2"
-                                                                {...getRootProps()}
-                                                                >
-                                                                <input {...getInputProps()} />
-                                                                <div className="mb-3" style={{height:'120px'}}>
-                                                                    <i className="display-4 text-muted ri-upload-cloud-2-line"></i>
-                                                                </div>
-                                                                <h4 style={{height:'15rem'}}>Drop Your PPSizePhoto Image Here.</h4>
-                                                                </div>
-                                                            </div>
-                                                            )}
-                                                        </Dropzone>
-                                                        <div
-                                                            className="dropzone-previews mt-3"
-                                                            id="file-previews"
-                                                        >
-                                                            {this.state.selectedFilesPP.map((f, i) => {
-                                                            return (
-                                                                <Card
-                                                                className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
-                                                                key={i + "-file"}
-                                                                >
-                                                                <div className="p-2">
-                                                                    <Row className="align-items-center">
-                                                                    <Col className="col-auto">
-                                                                        <img
-                                                                        data-dz-thumbnail=""
-                                                                        height="80"
-                                                                        className="avatar-sm rounded bg-light"
-                                                                        alt={f.name}
-                                                                        src={f.preview}
-                                                                        />
-                                                                    </Col>
-                                                                    <Col>
-                                                                        <Link
-                                                                        to="#"
-                                                                        className="text-muted font-weight-bold"
-                                                                        >
-                                                                        {f.name}
-                                                                        </Link>
-                                                                        <p className="mb-0">
-                                                                        <strong>{f.formattedSize}</strong>
-                                                                        </p>
-                                                                    </Col>
-                                                                    </Row>
-                                                                </div>
-                                                                </Card>
-                                                            );
-                                                            })}
-                                                        </div>
-                                                        </Col>
-                                                        </Row>
-                                                        </div>
+                                      <Dropzone
+                                      onDrop={acceptedFiles =>
+                                      this.handleAcceptedFilesPP(acceptedFiles)
+                                      }
+                                  >
+                                      {({ getRootProps, getInputProps }) => (
+                                      <div className="dropzone">
+                                          <div
+                                          className="dz-message needsclick mt-2"
+                                          {...getRootProps()}
+                                          >
+                                          <input {...getInputProps()} />
+                                          <div className="mb-3" style={{height:'120px'}}>
+                                              <i className="display-4 text-muted ri-upload-cloud-2-line"></i>
+                                          </div>
+                                          <h4 style={{height:'15rem'}}>Drop Your PPSizePhoto Image Here.</h4>
+                                          </div>
+                                      </div>
+                                      )}
+                                  </Dropzone>
+                                  <div
+                                      className="dropzone-previews mt-3"
+                                      id="file-previews"
+                                  >
+                                      {this.state.selectedFilesPP.map((f, i) => {
+                                      return (
+                                          <Card
+                                          className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                                          key={i + "-file"}
+                                          >
+                                          <div className="p-2">
+                                              <Row className="align-items-center">
+                                              <Col className="col-auto">
+                                                  <img
+                                                  data-dz-thumbnail=""
+                                                  height="80"
+                                                  className="avatar-sm rounded bg-light"
+                                                  alt={f.name}
+                                                  src={f.preview}
+                                                  />
+                                              </Col>
+                                              <Col>
+                                                  <Link
+                                                  to="#"
+                                                  className="text-muted font-weight-bold"
+                                                  >
+                                                  {f.name}
+                                                  </Link>
+                                                  <p className="mb-0">
+                                                  <strong>{f.formattedSize}</strong>
+                                                  </p>
+                                              </Col>
+                                              </Row>
+                                          </div>
+                                          </Card>
+                                      );
+                                      })}
+                                  </div>
+                                  </Col>
+                                  </Row>
+                                  </div>
           {/* <div className="file-area">
           <div className="upload-area">
           <div className="image-name">{this.state.citizenship_front ? this.state.citizenship_front.name : "Not uploaded" }</div>
