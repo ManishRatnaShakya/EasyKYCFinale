@@ -6,6 +6,9 @@ import {Form} from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import logo from "../EasyKYC-logos/EasyKYC-logos_transparent.png";
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/ClipLoader";
+import Toast from 'react-bootstrap/Toast';
 // import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 class FormKYC extends Component {
   state = {
@@ -16,13 +19,21 @@ class FormKYC extends Component {
     upload_disabled: false,  
 
     //for face
-    verified: null,
+    verified: true,
 
     //for text
     citizen_no: null,
-    full_name: "",
+    full_name: "manish",
     address:"",
     ward_no:"",
+    area:"",
+    sex:"",
+    birth_place_district:"",
+    birth_place_ward_no:"",
+    birth_place_area:"",
+    dob_year: "",
+    dob_month:"",
+    dob_day: "",
     selectedFiles: [],
     selectedFilesBack:[],
     selectedFilesPP:[]
@@ -145,9 +156,18 @@ class FormKYC extends Component {
       this.setState({upload_disabled:false})
       this.setState({citizen_no: res.data["citizen_no"]})
       this.setState({full_name: res.data["full_name"]})
+      this.setState({area: res.data["p_address_area"]})
       this.setState({address:res.data["p_address_district"]})
       this.setState({ward_no:res.data["p_address_ward_no"]})
-      this.props.data({...this.state})
+      this.setState({dob_year:res.data["dob_year"]})
+      this.setState({dob_month:res.data["dob_month"]})
+      this.setState({dob_day:res.data["dob_day"]})
+      this.setState({sex: res.data["sex"]})
+      this.setState({birth_place_area: res.data["birth_place_area"]})
+      this.setState({birth_place_district: res.data["birth_place_district"]})
+      this.setState({birth_place_ward_no:res.data["birth_place_ward_no"]})
+
+      // this.props.data({...this.state})
     })
     axios({
       // url : "http://mangaleshworagrovet.com/text",
@@ -199,11 +219,36 @@ class FormKYC extends Component {
         <div className="heading">
           <div style={{width:'8%',height:'100%'}}><img src={logo} alt="dont have img" style={{height:'100%'}}/></div>
         </div>
-        <div style={{width: '100%'}}>     
+        <div className="form-parent"style={{width: '100%'}}>     
        
             {this.state.full_name?
-        <div style={{width:"70%",display: "flex",justifyContent: "center",marginLeft:'15%'}}>
-                    <Form>
+        <div style={{width:"100%",display: "flex",justifyContent: "center"}}>
+                    <Form style={{width:"100%"}}>
+                    <div
+  aria-live="polite"
+  aria-atomic="true"
+  style={{
+    position: 'relative',
+    minHeight: '40px',
+  }}
+>
+  <div
+    style={{
+      position: 'absolute',
+      top: 0,
+      right: 0,
+    }}
+  >
+    <Toast show={this.state.verified} onClose={()=>this.setState({verified:false})}delay={3000} autohide>
+      <Toast.Header>
+       
+        <strong className="mr-auto">Face Detection</strong>
+        <small>just now</small>
+      </Toast.Header>
+      <Toast.Body>Face Matched!!</Toast.Body>
+    </Toast>
+  </div>
+</div>
                       <div className="form-title-bar"> 
                       <h3>Your Form Is Ready</h3>
                      </div>
@@ -217,54 +262,54 @@ class FormKYC extends Component {
                 </Form.Group>
                 <Form.Group  controlId="formGridEmail">
                   <Form.Label>Citizenship Number</Form.Label>
-                  <Form.Control type="text" value={this.state.citizen_no} />
+                  <Form.Control type="text" value={this.state.citizen_no} onChange={(e)=>this.setState({citizen_no:e.target.value})}/>
                 </Form.Group>
 
                 <Form.Group  controlId="formGridPassword">
                   <Form.Label>Full Name</Form.Label>
-                  <Form.Control type="text" value={this.state.full_name} />
+                  <Form.Control type="text" value={this.state.full_name}  onChange={(e)=>this.setState({full_name:e.target.value})}/>
                 </Form.Group>
               
 
               <div className="form-title-bar"><h3>Birth Address</h3></div>
               <Form.Group controlId="formGridAddress1">
                 <Form.Label>District</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control type="text" value={this.state.birth_place_district}  onChange={(e)=>this.setState({birth_place_district:e.target.value})}/>
               </Form.Group>
 
               <Form.Group controlId="formGridAddress2">
                 <Form.Label>Muncipality</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control type="text" value={this.state.birth_place_area}  onChange={(e)=>this.setState({birth_place_area:e.target.value})}/>
               </Form.Group>
 
             
                 <Form.Group  controlId="formGridCity">
                   <Form.Label>Ward no</Form.Label>
-                  <Form.Control type="text" value={this.state.ward_no}/>
+                  <Form.Control type="text" value={this.state.birth_place_ward_no}  onChange={(e)=>this.setState({birth_place_ward_no:e.target.value})}/>
                 </Form.Group>
 
               <div className="form-title-bar"><h3>Permanent Address</h3></div>
               <Form.Group controlId="formGridAddress1">
                 <Form.Label>District</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control type="text" value={this.state.address}  onChange={(e)=>this.setState({address:e.target.value})}/>
               </Form.Group>
 
               <Form.Group controlId="formGridAddress2">
                 <Form.Label>Muncipality</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control type="text" value={this.state.area}  onChange={(e)=>this.setState({area:e.target.value})}/>
               </Form.Group>
 
             
                 <Form.Group  controlId="formGridCity">
-                  <Form.Label>ward_no</Form.Label>
-                  <Form.Control type="text"/>
+                  <Form.Label>Ward no</Form.Label>
+                  <Form.Control type="text" value={this.state.ward_no}  onChange={(e)=>this.setState({ward_no:e.target.value})}/>
                 </Form.Group>
 
 
                 
               
 
-            <Form.Group >
+            <Form.Group defaultValue="Male" >
                   <Form.Label as="legend" column sm={2}>
                   <h4>Gender</h4>
                   </Form.Label>
@@ -273,7 +318,9 @@ class FormKYC extends Component {
                       type="radio"
                       label="Male"
                       name="formHorizontalRadios"
-                      id="formHorizontalRadios1"
+                      id="Male"
+                      value="Male"
+                      checked
                     />
                     <Form.Check
                       type="radio"
@@ -287,6 +334,7 @@ class FormKYC extends Component {
                       name="formHorizontalRadios"
                       id="formHorizontalRadios3"
                     />
+                   
                     </div>
                   
                 </Form.Group>
@@ -298,62 +346,63 @@ class FormKYC extends Component {
                     <Form.Check
                       type="radio"
                       label="Married"
-                      name="formHorizontalRadios"
+                      name="formHorizontalRadiosRelation"
                       id="formHorizontalRadios1"
                     />
                     <Form.Check
                       type="radio"
                       label="Unmarried"
-                      name="formHorizontalRadios"
+                      name="formHorizontalRadiosRelation"
                       id="formHorizontalRadios2"
+                      checked
                     />
                   
                       </div>
                     
                   </Form.Group>
-              <h3>Date Of Birth</h3> 
+             <div className="form-title-bar"> <h3>Date Of Birth</h3> </div>
                   <Form.Group controlId="formGridZip">
                     <Form.Label>Year</Form.Label>
-                    <Form.Control />
+                    <Form.Control value={this.state.dob_year}  onChange={(e)=>this.setState({dob_year:e.target.value})}/>
                   </Form.Group>
 
                   <Form.Group controlId="formGridZip">
                     <Form.Label>Month</Form.Label>
-                    <Form.Control />
+                    <Form.Control value={this.state.dob_month}  onChange={(e)=>this.setState({dob_month:e.target.value})}/>
                   </Form.Group>
 
                   <Form.Group controlId="formGridZip">
                     <Form.Label>Day</Form.Label>
-                    <Form.Control />
+                    <Form.Control value={this.state.dob_day}  onChange={(e)=>this.setState({dob_day:e.target.value})}/>
                   </Form.Group>
 
-              <h3>Contact Information</h3> 
+             <div className="form-title-bar"> <h3>Contact Information</h3> </div>
               <Form.Row>
                   <Form.Group as={Col} controlId="formGridZip">
                     <Form.Label>Mobile no. 1</Form.Label>
-                    <Form.Control />
+                    <Form.Control  onChange={(e)=>this.setState({mob1:e.target.value})} />
                   </Form.Group>
 
                   <Form.Group  as={Col} controlId="formGridZip">
                     <Form.Label>Mobile no. 2</Form.Label>
-                    <Form.Control />
+                    <Form.Control  onChange={(e)=>this.setState({mob2:e.target.value})} />
                   </Form.Group>
                   </Form.Row>
               <Form.Row>
                   <Form.Group as={Col} controlId="formGridZip">
                     <Form.Label>Landline no. 1</Form.Label>
-                    <Form.Control />
+                    <Form.Control  onChange={(e)=>this.setState({landline1:e.target.value})} />
                   </Form.Group>
 
                   <Form.Group  as={Col} controlId="formGridZip">
                     <Form.Label>Landline no. 2</Form.Label>
-                    <Form.Control />
+                    <Form.Control  onChange={(e)=>this.setState({landline2:e.target.value})}/>
                   </Form.Group>
                   </Form.Row>
 
                   <Form.Group controlId="formGridZip">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control />
+                    <Form.Control  onChange={(e)=>this.setState({email:e.target.value})}/>
                   </Form.Group>
               
                 <Button variant="primary" type="submit">
@@ -365,7 +414,7 @@ class FormKYC extends Component {
       
         
         :
-        <form style={{display:'flex',flexDirection:'column'}}>
+       <form style={{display:'flex',flexDirection:'column'}}>
                 <div  style={{display:"flex",height:'20rem',justifyContent:"space-between",margin:'10px'}}>                               
             <Row className="dropzone-outlook">
               <Col md={12} style={{height:'106px'}}> 
@@ -381,36 +430,29 @@ class FormKYC extends Component {
                                                                 {...getRootProps()}
                                                                 >
                                                                 <input {...getInputProps()} />
-                                                                <div className="mb-3" style={{height:'120px'}}>
+                                                                <div className="mb-3" style={this.state.selectedFiles.length===0?{height:'130px'}:{height:'0px'}}>
                                                                     <i className="display-4 text-muted ri-upload-cloud-2-line"></i>
                                                                 </div>
-                                                                <h4 style={{height:'15rem'}}>Drop Your Citizenship Front Image Here.</h4>
-                                                                </div>
-                                                            </div>
-                                                            )}
-                                                        </Dropzone>
-                                                        <div
+                                                                {this.state.selectedFiles.length===0?<h4 style={{height:'15rem'}}>Drop Your Citizenship Front Image Here.</h4>: <div
                                                             className="dropzone-previews mt-3"
                                                             id="file-previews"
                                                         >
                                                             {this.state.selectedFiles.map((f, i) => {
                                                             return (
-                                                                <Card
-                                                                className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
-                                                                key={i + "-file"}
-                                                                >
+                                                               
                                                                 <div className="p-2">
                                                                     <Row className="align-items-center">
-                                                                    <Col className="col-auto">
+                                                                    <div className="col-auto">
                                                                         <img
                                                                         data-dz-thumbnail=""
-                                                                        height="80"
+                                                                        // height="80"
                                                                         className="avatar-sm rounded bg-light"
                                                                         alt={f.name}
                                                                         src={f.preview}
+                                                                        style={{height:'100%', width:'100%'}}
                                                                         />
-                                                                    </Col>
-                                                                    <Col>
+                                                                    </div>
+                                                                    <div>
                                                                         <Link
                                                                         to="#"
                                                                         className="text-muted font-weight-bold"
@@ -420,13 +462,18 @@ class FormKYC extends Component {
                                                                         <p className="mb-0">
                                                                         <strong>{f.formattedSize}</strong>
                                                                         </p>
-                                                                    </Col>
+                                                                    </div>
                                                                     </Row>
                                                                 </div>
-                                                                </Card>
+                                                               
                                                             );
                                                             })}
-                                                        </div>
+                                                        </div>}
+                                                                </div>
+                                                            </div>
+                                                            )}
+                                                        </Dropzone>
+                                                       
                                                         </Col>
                                                         </Row>
            
@@ -445,36 +492,29 @@ class FormKYC extends Component {
                                                                 {...getRootProps()}
                                                                 >
                                                                 <input {...getInputProps()} />
-                                                                <div className="mb-3" style={{height:'120px'}}>
+                                                                <div className="mb-3" style={this.state.selectedFilesBack.length===0?{height:'130px'}:{height:'0px'}}>
                                                                     <i className="display-4 text-muted ri-upload-cloud-2-line"></i>
                                                                 </div>
-                                                                <h4 style={{height:'15rem'}}>Drop Your Citizenship Back Image Here.</h4>
-                                                                </div>
-                                                            </div>
-                                                            )}
-                                                        </Dropzone>
-                                                        <div
+                                                                {this.state.selectedFilesBack.length===0?<h4 style={{height:'15rem'}}>Drop Your Citizenship Back Image Here.</h4>:<div
                                                             className="dropzone-previews mt-3"
                                                             id="file-previews"
                                                         >
                                                             {this.state.selectedFilesBack.map((f, i) => {
                                                             return (
-                                                                <Card
-                                                                className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
-                                                                key={i + "-file"}
-                                                                >
+                                                               
                                                                 <div className="p-2">
                                                                     <Row className="align-items-center">
-                                                                    <Col className="col-auto">
+                                                                    <div className="col-auto">
                                                                         <img
                                                                         data-dz-thumbnail=""
-                                                                        height="80"
+                                                                        // height="80"
                                                                         className="avatar-sm rounded bg-light"
                                                                         alt={f.name}
                                                                         src={f.preview}
+                                                                        style={{height:'100%', width:'100%'}}
                                                                         />
-                                                                    </Col>
-                                                                    <Col>
+                                                                    </div>
+                                                                    <div>
                                                                         <Link
                                                                         to="#"
                                                                         className="text-muted font-weight-bold"
@@ -484,13 +524,18 @@ class FormKYC extends Component {
                                                                         <p className="mb-0">
                                                                         <strong>{f.formattedSize}</strong>
                                                                         </p>
-                                                                    </Col>
+                                                                    </div>
                                                                     </Row>
                                                                 </div>
-                                                                </Card>
+                                                               
                                                             );
                                                             })}
-                                                        </div>
+                                                        </div>}
+                                                                </div>
+                                                            </div>
+                                                            )}
+                                                        </Dropzone>
+                                                       
                                                         </Col>
                                                         </Row>
 
@@ -508,36 +553,29 @@ class FormKYC extends Component {
                                                                 {...getRootProps()}
                                                                 >
                                                                 <input {...getInputProps()} />
-                                                                <div className="mb-3" style={{height:'120px'}}>
+                                                                <div className="mb-3"  style={this.state.selectedFilesPP.length===0?{height:'130px'}:{height:'0px'}}>
                                                                     <i className="display-4 text-muted ri-upload-cloud-2-line"></i>
                                                                 </div>
-                                                                <h4 style={{height:'15rem'}}>Drop Your PPSizePhoto Image Here.</h4>
-                                                                </div>
-                                                            </div>
-                                                            )}
-                                                        </Dropzone>
-                                                        <div
+                                                                {this.state.selectedFilesPP.length===0?<h4 style={{height:'15rem'}}>Drop Your PPSizePhoto Image Here.</h4>:<div
                                                             className="dropzone-previews mt-3"
                                                             id="file-previews"
                                                         >
                                                             {this.state.selectedFilesPP.map((f, i) => {
                                                             return (
-                                                                <Card
-                                                                className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
-                                                                key={i + "-file"}
-                                                                >
+                                                               
                                                                 <div className="p-2">
                                                                     <Row className="align-items-center">
-                                                                    <Col className="col-auto">
+                                                                    <div className="col-auto">
                                                                         <img
                                                                         data-dz-thumbnail=""
-                                                                        height="80"
+                                                                        // height="80"
                                                                         className="avatar-sm rounded bg-light"
                                                                         alt={f.name}
                                                                         src={f.preview}
+                                                                        style={{height:'100%', width:'69%'}}
                                                                         />
-                                                                    </Col>
-                                                                    <Col>
+                                                                    </div>
+                                                                    <div>
                                                                         <Link
                                                                         to="#"
                                                                         className="text-muted font-weight-bold"
@@ -547,17 +585,21 @@ class FormKYC extends Component {
                                                                         <p className="mb-0">
                                                                         <strong>{f.formattedSize}</strong>
                                                                         </p>
-                                                                    </Col>
+                                                                    </div>
                                                                     </Row>
                                                                 </div>
-                                                                </Card>
+                                                               
                                                             );
                                                             })}
-                                                        </div>
+                                                        </div>}
+                                                                </div>
+                                                            </div>
+                                                            )}
+                                                        </Dropzone>
                                                         </Col>
                                                         </Row>
                                                         </div>
-          {/* <div className="file-area">
+                                                        {/* <div className="file-area">
           <div className="upload-area">
           <div className="image-name">{this.state.citizenship_front ? this.state.citizenship_front.name : "Not uploaded" }</div>
           <input  type="file" name = "citizenship_front" onChange = {(e)=>this.handleCitizenship_front(e)} id="citizenship_front"/>
@@ -576,7 +618,7 @@ class FormKYC extends Component {
           </div> */}
         <Row style={{margin:"185px",marginTop: '205px',marginBottom: '25px'}}>
           <Col style={{display:"flex",justifyContent: 'center'}}>
-        <Button style={{width :'150px',height: '52px'}} type = "button" className='lg' disabled={this.state.upload_disabled} onClick={e=>this.handleUpload(e)}>Verify</Button>
+        {this.state.upload_disabled?<ClipLoader  size={100} />:<Button style={{width :'150px',height: '52px'}} type = "button" className='lg' disabled={this.state.upload_disabled} onClick={e=>this.handleUpload(e)}>Verify</Button>}
         </Col>
         </Row>
         </form>

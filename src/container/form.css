@@ -31,8 +31,8 @@
     display: none;
   }
   
-  button {
-    /* margin: 5px 0; */
+  /* button {
+  
     padding: 10px;
     font: inherit;
     border: 1px solid #fa923f;
@@ -41,7 +41,7 @@
     cursor: pointer;
     margin: 5px auto;
     display: block;
-  }
+  } */
 
   .upload{
     margin: 5px 0;
@@ -83,21 +83,33 @@
     justify-content: center;
     margin: auto;
   }
-  form{
+  .files-form{
     width: 100%;
     height: 60%;
+    /* background-color: red; */
+    display: flex;
+    flex-direction:column;
     
+  }
+  .upload-field{
+    display: flex;
+    height: 20rem;
+    justify-content: space-between;
+    margin: 10px;
+    /* style={{display:"flex",height:'20rem',justifyContent:"space-between",margin:'10px'}} */
   }
   .form-area{
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 80%;
+    margin:auto;
     align-items: center;
-    border-style: solid;
+    
+    /* border-style: solid;
     border-color:black;
     border-width: 2px;
-    border-radius: 10px;
-    margin:10px;
+    border-radius: 10px; */
+    /* margin:10px; */
   }
   .message-area{
     height: 80px;
@@ -110,7 +122,7 @@
     width: 100%;
     text-align: center;
     font-size: 50px;
-    border-style: none none dashed none;
+    /* border-style: none none dashed none; */
     text-align: center;
     color: #fa923f;
     border-color:black;
@@ -207,7 +219,7 @@
 
 
 
-  table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting {
+table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting {
   padding-right: 30px;
 }
 
@@ -330,10 +342,12 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 }
 
 .form-container{
+
   width: 100%;
+  background-color: rgb(238, 238, 245) ;
 }
 .form-title-bar{
-  background-color:rgb(23,92,76);
+  background-color:#0C509E;
   margin-top:70px;
   text-align: center;
   
@@ -342,4 +356,9 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 color:#ffffff;
 
 
+}
+.form-parent{
+  /* box-shadow: rgb(51, 51, 53) -30px 30px 15px; */
+  background-color: white;
+  padding: 10px 20px;
 }
